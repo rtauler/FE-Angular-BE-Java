@@ -1,0 +1,11 @@
+<div class="work-area">
+    <div class="button-wrapper"><button (click)="fetchValue()">Reload</button></div>
+    <div class="timer-wrapper">
+        <p class="label">loadtime:</p>
+        <p>{{ timerData }}</p>
+    </div>
+    <div class="requests-wrapper">
+        <app-requests></app-requests>
+    </div>
+</div>
+<ngx-spinner></ngx-spinner>

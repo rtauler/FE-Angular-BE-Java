@@ -1,0 +1,87 @@
+/* this would be way better if id used SASS/SCSS */
+
+.requests-wrapper {
+    width: 100%;
+    display: inline-block;
+}
+
+.boxA {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    width: calc(33% - 20px);
+    height: 50px;
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 10px;
+    box-shadow: 0px 2px 2px black;
+    transition: all .2s;
+    transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.boxB {
+    background: linear-gradient(-45deg, #23d5ab, #23a6d5, #e73c7e, #ee7752);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    width: calc(33% - 20px);
+    height: 50px;
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 10px;
+    box-shadow: 0px 2px 2px black;
+    transition: all .2s;
+    transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.boxC {
+    background: linear-gradient(-45deg, #23a6d5, #23d5ab, #ee7752, #e73c7e);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    width: calc(33% - 20px);
+    height: 50px;
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 10px;
+    box-shadow: 0px 2px 2px black;
+    transition: all .2s;
+    transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.boxA:hover {
+    transition: all .2s;
+    transform: scale(1.05);
+    transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.boxB:hover {
+    transition: all .2s;
+    transform: scale(1.05);
+    transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.boxC:hover {
+    transition: all .2s;
+    transform: scale(1.05);
+    transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
