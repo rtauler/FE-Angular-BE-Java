@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 public class HiringResource {
 
     private int counter = 0;
+
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(value = "/counter", method = RequestMethod.GET)
