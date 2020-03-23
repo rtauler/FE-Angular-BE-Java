@@ -5,7 +5,9 @@
         <p>{{ timerData }}</p>
     </div>
     <div class="requests-wrapper">
-        <app-requests></app-requests>
+        <div class="box{{request.type}}" *ngFor="let request of requests">
+            <p>{{request.type}} {{request.number}}</p>
+        </div>
     </div>
 </div>
 <ngx-spinner></ngx-spinner>
