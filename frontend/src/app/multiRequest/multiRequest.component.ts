@@ -10,7 +10,7 @@ import { Request } from '../request';
 import { REQUESTS } from '../request-list';
 
 //import delayer
-import { delay } from 'rxjs/operators';
+import { delay, concatMap, tap } from 'rxjs/operators';
 
 //import timer
 import { timer } from 'rxjs';
@@ -51,58 +51,76 @@ export class MultiRequestComponent implements OnInit {
 
         //start spinner
         this.spinner.show();
-        //start request1-A
-        this.http.get(this.backendUrl,
-            { headers: new HttpHeaders({ 'X-Request-Type': 'A' }) }).subscribe((result: ICounterDTO) => {
 
-                //log value
-                console.log(result.value);
+        //NEW
 
-                //make value available on html
-                this.lastValue = result.value;
+        this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'A' }) })
+            .pipe(
+                tap(res => console.log('First result', res)),
+                concatMap((res: { timeout: 'B' }) => this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'B' }) })),
+                tap(res => console.log('Second result', res)),
+                concatMap((res: { timeout: 'C' }) => this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'C' }) })),
+                tap(res => console.log('Third result', res)),
+            )
+            .subscribe(res => console.log('Latest result', res));
 
-                //push value into requests array
-                REQUESTS.push({ type: "A", number: result.value })
+        //ENDNEW
 
-                //start request2-B (this http requests is delayed 100ms as per requirements)
-                this.http.get(this.backendUrl,
-                    { headers: new HttpHeaders({ 'X-Request-Type': 'B' }) }).pipe(delay(100)).subscribe((result: ICounterDTO) => {
 
-                        //log delay
-                        console.log("delayed 100ms");
+        // //start request1-A
+        // this.http.get(this.backendUrl,
+        //     { headers: new HttpHeaders({ 'X-Request-Type': 'A' }) }).subscribe((result: ICounterDTO) => {
 
-                        //log value
-                        console.log(result.value);
+        //         //log value
+        //         console.log(result.value);
 
-                        //make value available on html
-                        this.lastValue = result.value;
+        //         //make value available on html
+        //         this.lastValue = result.value;
 
-                        //push value into requests array
-                        REQUESTS.push({ type: "B", number: result.value })
+        //         //push value into requests array
+        //         REQUESTS.push({ type: "A", number: result.value })
 
-                        //start request3-C (this http requests is delayed 100ms as per requirements)
-                        this.http.get(this.backendUrl,
-                            { headers: new HttpHeaders({ 'X-Request-Type': 'C' }) }).pipe(delay(100)).subscribe((result: ICounterDTO) => {
+        //     });
 
-                                //log delay
-                                console.log("delayed 100ms");
+        // //start request2-B (this http requests is delayed 100ms as per requirements)
+        // this.http.get(this.backendUrl,
+        //     { headers: new HttpHeaders({ 'X-Request-Type': 'B' }) }).pipe(delay(100)).subscribe((result: ICounterDTO) => {
 
-                                //log value
-                                console.log(result.value);
+        //         //log delay
+        //         console.log("delayed 100ms");
 
-                                //make value available on html
-                                this.lastValue = result.value;
+        //         //log value
+        //         console.log(result.value);
 
-                                //push value into requests array
-                                REQUESTS.push({ type: "C", number: result.value })
+        //         //make value available on html
+        //         this.lastValue = result.value;
 
-                                //stop spinner
-                                this.spinner.hide();
+        //         //push value into requests array
+        //         REQUESTS.push({ type: "B", number: result.value })
 
-                                //stop timer
-                                setTimeout(() => { subscribe.unsubscribe(); }, 0);
-                            });
-                    });
-            });
+
+        //     });
+        // //start request3-C (this http requests is delayed 100ms as per requirements)
+        // this.http.get(this.backendUrl,
+        //     { headers: new HttpHeaders({ 'X-Request-Type': 'C' }) }).pipe(delay(100)).subscribe((result: ICounterDTO) => {
+
+        //         //log delay
+        //         console.log("delayed 100ms");
+
+        //         //log value
+        //         console.log(result.value);
+
+        //         //make value available on html
+        //         this.lastValue = result.value;
+
+        //         //push value into requests array
+        //         REQUESTS.push({ type: "C", number: result.value })
+
+        //         //stop spinner
+        //         this.spinner.hide();
+
+        //         //stop timer
+        //         setTimeout(() => { subscribe.unsubscribe(); }, 0);
+        //     });
     }
 }
