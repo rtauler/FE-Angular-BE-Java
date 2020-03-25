@@ -1,9 +1,10 @@
 //vars
-$cubic-beizer: cubic-bezier(0.4, 0.0, 0.2, 1);
+//colors
 $orange: #ee7752;
 $magenta: #e73c7e;
 $blue: #23a6d5;
 $green: #23d5ab;
+//backgrounds by type
 $bgA: $orange,
 $magenta,
 $blue,
@@ -16,9 +17,11 @@ $bgC: $blue,
 $green,
 $orange,
 $magenta;
+//values by type
 $types: "A" $bgA,
 "B" $bgB,
 "C" $bgC;
+$cubic-beizer: cubic-bezier(0.4, 0.0, 0.2, 1);
 // mixins
 @mixin box-animation {
     transition: all .2s;
@@ -47,9 +50,12 @@ $types: "A" $bgA,
 .requests-wrapper {
     width: 100%;
     display: inline-block;
+    //loop on each type of request
     @each $type,
     $bg in $types {
+        //append type to class
         .box#{$type} {
+            //background is selected based on type
             background: linear-gradient(-45deg, $bg);
             @include box-props();
         }
