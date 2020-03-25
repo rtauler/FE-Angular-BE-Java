@@ -1,49 +1,17 @@
-//vars
-//colors
-$orange: #ee7752;
-$magenta: #e73c7e;
-$blue: #23a6d5;
-$green: #23d5ab;
-//backgrounds by type
-$bgA: $orange,
-$magenta,
-$blue,
-$green;
-$bgB: $green,
-$blue,
-$magenta,
-$orange;
-$bgC: $blue,
-$green,
-$orange,
-$magenta;
-//values by type
-$types: "A" $bgA,
-"B" $bgB,
-"C" $bgC;
-$cubic-beizer: cubic-bezier(0.4, 0.0, 0.2, 1);
-// mixins
-@mixin box-animation {
-    transition: all .2s;
-    transition-timing-function: $cubic-beizer;
-}
-
-@mixin box-props {
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-    width: calc(33% - 20px);
-    height: 50px;
-    border-radius: 5px;
-    color: white;
-    text-align: center;
+@import 'scss/variables';
+@import 'scss/mixins';
+@import 'scss/animations';
+@import 'scss/buttons';
+.timer-wrapper {
     display: inline-block;
-    vertical-align: middle;
-    margin: 10px;
-    box-shadow: 0px 2px 2px black;
-    @include box-animation;
-    &:hover {
-        transform: scale(1.05);
-        @include box-animation;
+    margin-left: 20px;
+    font-size: 30px;
+    color: rgb(87, 87, 87);
+    p {
+        display: inline-block;
+        &.value {
+            color: white;
+        }
     }
 }
 
@@ -59,17 +27,5 @@ $cubic-beizer: cubic-bezier(0.4, 0.0, 0.2, 1);
             background: linear-gradient(-45deg, $bg);
             @include box-props();
         }
-    }
-}
-
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
     }
 }

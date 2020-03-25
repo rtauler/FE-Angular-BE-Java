@@ -1,0 +1,24 @@
+//vars
+//colors
+$orange: #ee7752;
+$magenta: #e73c7e;
+$blue: #23a6d5;
+$green: #23d5ab;
+//backgrounds by type
+$bgA: $orange,
+$magenta,
+$blue,
+$green;
+$bgB: $green,
+$blue,
+$magenta,
+$orange;
+$bgC: $blue,
+$green,
+$orange,
+$magenta;
+//values by type
+$types: "A" $bgA,
+"B" $bgB,
+"C" $bgC;
+$cubic-beizer: cubic-bezier(0.4, 0.0, 0.2, 1);

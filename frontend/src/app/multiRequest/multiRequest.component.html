@@ -1,14 +1,13 @@
-<div class="work-area">
-    <div class="button-wrapper"><button (click)="fetchValue()">Reload</button></div>
-    <div class="timer-wrapper">
-        <p class="label">loadtime:</p>
-        <p>{{ timerData }}</p>
-    </div>
-    <div class="requests-wrapper">
-        <pre style="position: absolute; top: 5rem;"><code id="result"></code></pre>
-        <div class="box{{request.type}}" *ngFor="let request of requests">
-            <p>{{request.type}} {{request.number}}</p>
-        </div>
+<div class="button-wrapper">
+    <button (click)="fetchValue()">Reload</button></div>
+<div class="timer-wrapper">
+    <p>loadtime:</p>
+    <p class="value">{{timerData}}</p>
+</div>
+<div class="requests-wrapper">
+    <div class="box{{request.type}}" *ngFor="let request of requests">
+        <p>{{request.type}} {{request.number}}</p>
     </div>
 </div>
+
 <ngx-spinner></ngx-spinner>
