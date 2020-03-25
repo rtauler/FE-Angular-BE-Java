@@ -80,8 +80,13 @@ export class MultiRequestComponent implements OnInit {
                     console.log(res.value)
                     this.lastValue = res.value;
                     REQUESTS.push({ type: "C", number: res.value })
+                    //stop spinner
+                    this.spinner.hide();
+                    //stop timer
+                    setTimeout(() => { subscribe.unsubscribe(); }, 0);
                 }),
             ).subscribe();
+
 
 
 
