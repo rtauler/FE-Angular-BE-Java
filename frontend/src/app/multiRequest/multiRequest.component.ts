@@ -55,11 +55,6 @@ export class MultiRequestComponent implements OnInit {
         //start spinner
         this.spinner.show();
 
-
-
-
-        //NEW
-
         this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'A' }) })
             .pipe(delay(100),
                 tap((res: ICounterDTO) => {
@@ -86,69 +81,6 @@ export class MultiRequestComponent implements OnInit {
                     setTimeout(() => { subscribe.unsubscribe(); }, 0);
                 }),
             ).subscribe();
-
-
-
-
-
-
-        //ENDNEW
-
-
-        // //start request1-A
-        // this.http.get(this.backendUrl,
-        //     { headers: new HttpHeaders({ 'X-Request-Type': 'A' }) }).subscribe((result: ICounterDTO) => {
-
-        //         //log value
-        //         console.log(result.value);
-
-        //         //make value available on html
-        //         this.lastValue = result.value;
-
-        //         //push value into requests array
-        //         REQUESTS.push({ type: "A", number: result.value })
-
-        //     });
-
-        // //start request2-B (this http requests is delayed 100ms as per requirements)
-        // this.http.get(this.backendUrl,
-        //     { headers: new HttpHeaders({ 'X-Request-Type': 'B' }) }).pipe(delay(100)).subscribe((result: ICounterDTO) => {
-
-        //         //log delay
-        //         console.log("delayed 100ms");
-
-        //         //log value
-        //         console.log(result.value);
-
-        //         //make value available on html
-        //         this.lastValue = result.value;
-
-        //         //push value into requests array
-        //         REQUESTS.push({ type: "B", number: result.value })
-
-
-        //     });
-        // //start request3-C (this http requests is delayed 100ms as per requirements)
-        // this.http.get(this.backendUrl,
-        //     { headers: new HttpHeaders({ 'X-Request-Type': 'C' }) }).pipe(delay(100)).subscribe((result: ICounterDTO) => {
-
-        //         //log delay
-        //         console.log("delayed 100ms");
-
-        //         //log value
-        //         console.log(result.value);
-
-        //         //make value available on html
-        //         this.lastValue = result.value;
-
-        //         //push value into requests array
-        //         REQUESTS.push({ type: "C", number: result.value })
-
-        //         //stop spinner
-        //         this.spinner.hide();
-
-        //         //stop timer
-        //         setTimeout(() => { subscribe.unsubscribe(); }, 0);
-        //     });
+        
     }
 }
