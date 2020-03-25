@@ -4,12 +4,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { getQueryValue } from '@angular/core/src/view/query';
 import { Subscription, forkJoin, Observable, from, of } from 'rxjs';
 
-
-
-//import interface and array
-import { Request } from '../request';
-import { REQUESTS } from '../request-list';
-
 //import delayer 
 import { delay, concatMap, tap, mergeMap, scan, switchMap, } from 'rxjs/operators';
 
@@ -21,8 +15,11 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 interface ICounterDTO { 
+    type: string;
     value: number;
-}
+};
+
+const REQUESTS: ICounterDTO[] = [];
 
 @Component({
     selector: 'app-multi-request',
@@ -60,21 +57,21 @@ export class MultiRequestComponent implements OnInit {
                 tap((res: ICounterDTO) => {
                     console.log(res.value)
                     this.lastValue = res.value;
-                    REQUESTS.push({ type: "A", number: res.value })
+                    REQUESTS.push({ type: "A", value: res.value })
                 }),
                 concatMap(() => this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'B' }) })
                     .pipe(delay(100))),
                 tap((res: ICounterDTO) => {
                     console.log(res.value)
                     this.lastValue = res.value;
-                    REQUESTS.push({ type: "B", number: res.value })
+                    REQUESTS.push({ type: "B", value: res.value })
                 }),
                 concatMap(() => this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'C' }) })
                     .pipe(delay(100))),
                 tap((res: ICounterDTO) => {
                     console.log(res.value)
                     this.lastValue = res.value;
-                    REQUESTS.push({ type: "C", number: res.value })
+                    REQUESTS.push({ type: "C", value: res.value })
                     //stop spinner
                     this.spinner.hide();
                     //stop timer
