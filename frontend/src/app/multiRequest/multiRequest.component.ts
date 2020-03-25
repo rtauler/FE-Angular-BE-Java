@@ -57,15 +57,15 @@ export class MultiRequestComponent implements OnInit {
 
         //NEW
 
-        this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'A' }) })
+        this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'A' }) }).pipe(delay(100))
             .pipe(
                 tap(res => console.log('First result', res)),
-                concatMap((res: { timeout: 'B' }) => this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'B' }) })),
+                concatMap(() => this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'B' }) }).pipe(delay(100))),
                 tap(res => console.log('Second result', res)),
-                concatMap((res: { timeout: 'C' }) => this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'C' }) })),
+                concatMap(() => this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'C' }) }).pipe(delay(100))),
                 tap(res => console.log('Third result', res)),
             )
-            .subscribe(res => console.log('Latest result', res));
+            .subscribe(res => res);
 
         //ENDNEW
 
