@@ -2,8 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { getQueryValue } from '@angular/core/src/view/query';
-import { Subscription, forkJoin, Observable, from } from 'rxjs';
-import { switchMap, concatMap, tap, mergeMap, scan } from 'rxjs/operators';
+import { Subscription, forkJoin, Observable, from, of } from 'rxjs';
 
 
 
@@ -12,13 +11,14 @@ import { Request } from '../request';
 import { REQUESTS } from '../request-list';
 
 //import delayer
-import { delay, concatMap, tap } from 'rxjs/operators';
+import { delay, concatMap, tap, mergeMap, scan, switchMap, } from 'rxjs/operators';
 
 //import timer
 import { timer } from 'rxjs';
 
 //import spinner library
 import { NgxSpinnerService } from "ngx-spinner";
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 interface ICounterDTO {
     value: number;
@@ -55,17 +55,37 @@ export class MultiRequestComponent implements OnInit {
         //start spinner
         this.spinner.show();
 
+
+
+
         //NEW
 
-        this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'A' }) }).pipe(delay(100))
-            .pipe(
-                tap(res => console.log('First result', res)),
-                concatMap(() => this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'B' }) }).pipe(delay(100))),
-                tap(res => console.log('Second result', res)),
-                concatMap(() => this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'C' }) }).pipe(delay(100))),
-                tap(res => console.log('Third result', res)),
-            )
-            .subscribe(res => res);
+        this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'A' }) })
+            .pipe(delay(100),
+                tap((res: ICounterDTO) => {
+                    console.log(res.value)
+                    this.lastValue = res.value;
+                    REQUESTS.push({ type: "A", number: res.value })
+                }),
+                concatMap(() => this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'B' }) })
+                    .pipe(delay(100))),
+                tap((res: ICounterDTO) => {
+                    console.log(res.value)
+                    this.lastValue = res.value;
+                    REQUESTS.push({ type: "B", number: res.value })
+                }),
+                concatMap(() => this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'C' }) })
+                    .pipe(delay(100))),
+                tap((res: ICounterDTO) => {
+                    console.log(res.value)
+                    this.lastValue = res.value;
+                    REQUESTS.push({ type: "C", number: res.value })
+                }),
+            ).subscribe();
+
+
+
+
 
         //ENDNEW
 
