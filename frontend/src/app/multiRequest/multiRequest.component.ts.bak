@@ -1,9 +1,16 @@
 //import generics
 import { Component, OnInit } from '@angular/core';
+<<<<<<< HEAD
 import { HttpClient } from '@angular/common/http';
 import { getQueryValue } from '@angular/core/src/view/query';
 import { Subscription } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
+=======
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { getQueryValue } from '@angular/core/src/view/query';
+import { Subscription, forkJoin, Observable } from 'rxjs';
+
+>>>>>>> 1b150184ef147a08e564a0b072d8ca76ec7fe74e
 
 //import interface and array
 import { Request } from '../request';
@@ -30,6 +37,10 @@ interface ICounterDTO {
 export class MultiRequestComponent implements OnInit {
     //define variables
     private backendUrl = 'http://localhost:8080/api/hiring/counter';
+<<<<<<< HEAD
+=======
+    private apiUrl = 'http://localhost:1337/www.metaweather.com/api/location/';
+>>>>>>> 1b150184ef147a08e564a0b072d8ca76ec7fe74e
     public lastValue = 0;
     public timerData = 0;
     requests = REQUESTS;
@@ -42,7 +53,11 @@ export class MultiRequestComponent implements OnInit {
         this.fetchValue();
     }
 
+<<<<<<< HEAD
     fetchValue(): void {
+=======
+    public fetchValue(): void {
+>>>>>>> 1b150184ef147a08e564a0b072d8ca76ec7fe74e
         //define timer and start it
         const source = timer(0, 5);
         const subscribe = source.subscribe(

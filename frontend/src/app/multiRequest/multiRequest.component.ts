@@ -1,9 +1,11 @@
 //import generics
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { getQueryValue } from '@angular/core/src/view/query';
-import { Subscription } from 'rxjs';
-import { HttpHeaders } from '@angular/common/http';
+import { Subscription, forkJoin, Observable, from } from 'rxjs';
+import { switchMap, concatMap, tap, mergeMap, scan } from 'rxjs/operators';
+
+
 
 //import interface and array
 import { Request } from '../request';
@@ -42,7 +44,8 @@ export class MultiRequestComponent implements OnInit {
         this.fetchValue();
     }
 
-    fetchValue(): void {
+
+    public fetchValue(): void {
         //define timer and start it
         const source = timer(0, 5);
         const subscribe = source.subscribe(
