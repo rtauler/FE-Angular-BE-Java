@@ -10,7 +10,7 @@ import { Subscription, forkJoin, Observable, from, of } from 'rxjs';
 import { Request } from '../request';
 import { REQUESTS } from '../request-list';
 
-//import delayer
+//import delayer 
 import { delay, concatMap, tap, mergeMap, scan, switchMap, } from 'rxjs/operators';
 
 //import timer
@@ -20,14 +20,14 @@ import { timer } from 'rxjs';
 import { NgxSpinnerService } from "ngx-spinner";
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 
-interface ICounterDTO {
+interface ICounterDTO { 
     value: number;
 }
 
 @Component({
     selector: 'app-multi-request',
     templateUrl: './multiRequest.component.html',
-    styleUrls: ['./multiRequest.component.css']
+    styleUrls: ['./multiRequest.component.scss']
 })
 export class MultiRequestComponent implements OnInit {
     //define variables
