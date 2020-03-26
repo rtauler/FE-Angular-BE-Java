@@ -47,8 +47,14 @@ export class MultiRequestComponent implements OnInit {
         //start spinner
         this.spinner.show();
 
-        this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'A' }) })
+        this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'C' }) })
             .pipe(delay(100),
+                tap((res: ICounterDTO) => {
+                    console.log(res.value)
+                    this.requests.push({ type: "C", value: res.value })
+                }),
+                concatMap(() => this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'A' }) })
+                    .pipe(delay(100))),
                 tap((res: ICounterDTO) => {
                     console.log(res.value)
                     this.requests.push({ type: "A", value: res.value })
@@ -58,12 +64,6 @@ export class MultiRequestComponent implements OnInit {
                 tap((res: ICounterDTO) => {
                     console.log(res.value)
                     this.requests.push({ type: "B", value: res.value })
-                }),
-                concatMap(() => this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'C' }) })
-                    .pipe(delay(100))),
-                tap((res: ICounterDTO) => {
-                    console.log(res.value)
-                    this.requests.push({ type: "C", value: res.value })
                     //stop spinner
                     this.spinner.hide();
                     //stop timer
