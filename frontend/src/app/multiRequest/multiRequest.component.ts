@@ -1,25 +1,20 @@
 //import generics
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { getQueryValue } from '@angular/core/src/view/query';
-import { Subscription, forkJoin, Observable, from, of } from 'rxjs';
 
 //import delayer 
-import { delay, concatMap, tap, mergeMap, scan, switchMap, } from 'rxjs/operators';
+import { delay, concatMap, tap, } from 'rxjs/operators';
 
 //import timer
 import { timer } from 'rxjs';
 
 //import spinner library
 import { NgxSpinnerService } from "ngx-spinner";
-import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 interface ICounterDTO { 
     type: string;
     value: number;
 };
-
-const REQUESTS: ICounterDTO[] = [];
 
 @Component({
     selector: 'app-multi-request',
@@ -31,13 +26,13 @@ export class MultiRequestComponent implements OnInit {
     private backendUrl = 'http://localhost:8080/api/hiring/counter';
     public lastValue = 0;
     public timerData = 0;
-    requests = REQUESTS;
-    selectedRequest: Request;
+    public requests = [];
 
     constructor(private http: HttpClient, private spinner: NgxSpinnerService) { }
 
     ngOnInit() {
         console.log('Starting http requests');
+        console.log(this.requests);
         this.fetchValue();
     }
 
@@ -56,28 +51,24 @@ export class MultiRequestComponent implements OnInit {
             .pipe(delay(100),
                 tap((res: ICounterDTO) => {
                     console.log(res.value)
-                    this.lastValue = res.value;
-                    REQUESTS.push({ type: "A", value: res.value })
+                    this.requests.push({ type: "A", value: res.value })
                 }),
                 concatMap(() => this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'B' }) })
                     .pipe(delay(100))),
                 tap((res: ICounterDTO) => {
                     console.log(res.value)
-                    this.lastValue = res.value;
-                    REQUESTS.push({ type: "B", value: res.value })
+                    this.requests.push({ type: "B", value: res.value })
                 }),
                 concatMap(() => this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'C' }) })
                     .pipe(delay(100))),
                 tap((res: ICounterDTO) => {
                     console.log(res.value)
-                    this.lastValue = res.value;
-                    REQUESTS.push({ type: "C", value: res.value })
+                    this.requests.push({ type: "C", value: res.value })
                     //stop spinner
                     this.spinner.hide();
                     //stop timer
                     setTimeout(() => { subscribe.unsubscribe(); }, 0);
                 }),
-            ).subscribe();
-        
+            ).subscribe();    
     }
 }

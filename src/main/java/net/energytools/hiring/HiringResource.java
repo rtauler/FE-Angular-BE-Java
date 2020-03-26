@@ -24,23 +24,23 @@ public class HiringResource {
         if (requestType != null && requestType.toLowerCase().equals("a")) {
             counter += 1;
 
-            //custom log of info to better readability
+            // custom log of info to better readability
             log.info("Request type A {}", counter);
             try {
                 Thread.sleep(2000);
             } catch (final InterruptedException ignored) {
             }
-        }else if (requestType != null && requestType.toLowerCase().equals("b")) {
+        } else if (requestType != null && requestType.toLowerCase().equals("b")) {
             counter += 1;
 
-            //custom log of info to better readability
-            log.info("Request type B {}", counter);           
-        }else if (requestType != null && requestType.toLowerCase().equals("c")) {
+            // custom log of info to better readability
+            log.info("Request type B {}", counter);
+        } else if (requestType != null && requestType.toLowerCase().equals("c")) {
             counter += 1;
 
-            //custom log of info to better readability
-            log.info("Request type C {}", counter);           
-        }   
+            // custom log of info to better readability
+            log.info("Request type C {}", counter);
+        }
         return ResponseEntity.ok(new CounterDTO(counter));
     }
 }
