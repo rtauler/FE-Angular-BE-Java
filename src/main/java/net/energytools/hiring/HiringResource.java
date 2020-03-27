@@ -15,34 +15,31 @@ import javax.servlet.http.HttpServletRequest;
 public class HiringResource {
 
     private int counter = 0;
-    private int loopABC = 1;
+    private String loopABC = "A";
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(value = "/counter", method = RequestMethod.GET)
     public ResponseEntity<CounterDTO> getCounter(final HttpServletRequest request) {
         final String requestType = request.getHeader("X-Request-Type");
-        if (requestType != null && requestType.toLowerCase().equals("a") && loopABC == 1) {
+        if (requestType != null && requestType.toLowerCase().equals("a") && loopABC == "A") {
             counter += 1;
-            loopABC = 2;
+            loopABC = "B";
 
-            //custom log of info to better readability
             log.info("Request type A {}", counter);
             try {
                 Thread.sleep(2000);
             } catch (final InterruptedException ignored) {
             }
-        }else if (requestType != null && requestType.toLowerCase().equals("b") && loopABC == 2) {
+        }else if (requestType != null && requestType.toLowerCase().equals("b") && loopABC == "B") {
             counter += 1;
-            loopABC = 3;
+            loopABC = "C";
 
-            //custom log of info to better readability
             log.info("Request type B {}", counter);           
-        }else if (requestType != null && requestType.toLowerCase().equals("c") && loopABC == 3) {
+        }else if (requestType != null && requestType.toLowerCase().equals("c") && loopABC == "C") {
             counter += 1;
-            loopABC = 1;
+            loopABC = "A";
 
-            //custom log of info to better readability
             log.info("Request type C {}", counter);           
         }   
         return ResponseEntity.ok(new CounterDTO(counter));
