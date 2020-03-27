@@ -32,7 +32,6 @@ export class MultiRequestComponent implements OnInit {
 
     ngOnInit() {
         console.log('Starting http requests');
-        console.log(this.requests);
         this.fetchValue();
     }
 
@@ -50,7 +49,7 @@ export class MultiRequestComponent implements OnInit {
         this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'A' }) })
             .pipe(delay(100),
                 tap((res: ICounterDTO) => {
-                    console.log(res.value)
+                    console.log(res.value);
                     this.requests.push({ type: "A", value: res.value })
                 }),
                 concatMap(() => this.http.get(this.backendUrl, { headers: new HttpHeaders({ 'X-Request-Type': 'B' }) })
