@@ -1,6 +1,7 @@
 package net.energytools.hiring;
 
 public class CounterDTO {
+    // set value
     private int value;
 
     public CounterDTO(int value) {
@@ -14,4 +15,5 @@ public class CounterDTO {
     public void setValue(int value) {
         this.value = value;
     }
+
 }
